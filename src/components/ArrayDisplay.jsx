@@ -9,11 +9,11 @@ const checkin = (array, value) => {
   return false;
 };
 
-const getBarColor = ( index, comparing, inOrder, order) => {
+const getBarColor = (index, comparing, inOrder, order) => {
   let yellow = checkin(comparing, index);
   let red = checkin(inOrder, index);
   let green = checkin(order, index);
-  
+
   if (yellow) {
     return "yellow";
   } else if (red) {
@@ -21,9 +21,9 @@ const getBarColor = ( index, comparing, inOrder, order) => {
   } else if (green) {
     return "green";
   } else {
-    return "white"
+    return "white";
   }
-}
+};
 
 export default function ArrayDisplay(props) {
   const { array, comparing, inOrder, order } = props;
