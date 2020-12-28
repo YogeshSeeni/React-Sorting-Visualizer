@@ -13,14 +13,15 @@ function App() {
 
     return array;
   };
-  
+
   const [speed, setSpeed] = useState(50);
   const [arraySize, setArraySize] = useState(10);
   const [array, setArray] = useState(generateArray(arraySize));
   const [sortingAlgorithm, setSortingAlgorithm] = useState("bubbleSort");
-  const [comparing, setComparing] = useState([-1,-1]);
-  const [inOrder, setInOrder] = useState([-1,-1]);
-  const [order, setOrder] = useState([-1,-1]);
+  const [comparing, setComparing] = useState([-1, -1]);
+  const [inOrder, setInOrder] = useState([-1, -1]);
+  const [order, setOrder] = useState([-1, -1]);
+  const [sorting, setSorting] = useState(false);
 
   return (
     <div className="App">
@@ -37,8 +38,15 @@ function App() {
         setComparing={setComparing}
         setInOrder={setInOrder}
         setOrder={setOrder}
+        setSorting={setSorting}
+        sorting={sorting}
       />
-      <ArrayDisplay array={array} comparing={comparing} inOrder={inOrder} order={order}/>
+      <ArrayDisplay
+        array={array}
+        comparing={comparing}
+        inOrder={inOrder}
+        order={order}
+      />
     </div>
   );
 }

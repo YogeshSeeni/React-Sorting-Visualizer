@@ -15,29 +15,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import { bubbleSort } from "../sorting_algorithms";
 
-const sliderUseStyles = makeStyles({
-  root: {
-    width: 200,
-    marginRight: "15px",
-    marginTop: "5px",
-    color: "white",
-  },
-});
-
-const buttonUseStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      marginRight: "15px",
-      marginTop: "15px",
-      color: "white",
-    },
-  },
-}));
-
 export default function ControlBar(props) {
-  const sliderClasses = sliderUseStyles();
-  const buttonClasses = buttonUseStyles();
   const {
     setArray,
     array,
@@ -50,34 +28,80 @@ export default function ControlBar(props) {
     sortingAlgorithm,
     setComparing,
     setInOrder,
-    setOrder
+    setOrder,
+    setSorting,
+    sorting,
   } = props;
+
+  const color = sorting ? "red" : "white";
+
+  const sliderUseStyles = makeStyles({
+    root: {
+      width: 200,
+      marginRight: "15px",
+      marginTop: "5px",
+      color: color,
+    },
+  });
+
+  const buttonUseStyles = makeStyles((theme) => ({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+        marginRight: "15px",
+        marginTop: "15px",
+        color: color,
+      },
+    },
+  }));
+
+  const sliderClasses = sliderUseStyles();
+  const buttonClasses = buttonUseStyles();
 
   const handleGenerate = (e) => {
     e.preventDefault();
-    setArray(generateArray(arraySize));
+    if (!sorting) {
+      setArray(generateArray(arraySize));
+    }
   };
 
   const handleSort = (e) => {
     e.preventDefault();
-    if (sortingAlgorithm == "bubbleSort") {
-      bubbleSort(array, setArray, setComparing, setInOrder, setOrder, speed);
+    if (!sorting) {
+      if (sortingAlgorithm == "bubbleSort") {
+        setSorting(true);
+        bubbleSort(
+          array,
+          setArray,
+          setComparing,
+          setInOrder,
+          setOrder,
+          speed,
+          setSorting,
+          sorting
+        );
+      }
     }
-
   };
 
   const handleChangeSpeed = (_, newSpeed) => {
-    setSpeed(newSpeed);
+    if (!sorting) {
+      setSpeed(newSpeed);
+    }
   };
 
   const handleChangeArraySize = (_, newArraySize) => {
-    setArraySize(newArraySize);
-    setArray(generateArray(arraySize));
+    if (!sorting) {
+      setArraySize(newArraySize);
+      setArray(generateArray(arraySize));
+    }
   };
 
   const handleChangeSortingAlgorithm = (e) => {
-    setSortingAlgorithm(e.target.value);
-  }
+    if (!sorting) {
+      setSortingAlgorithm(e.target.value);
+    }
+  };
 
   return (
     <div className="control-panel">
@@ -96,6 +120,8 @@ export default function ControlBar(props) {
             <Slider
               value={speed}
               onChange={handleChangeSpeed}
+              min={0}
+              max={500}
               aria-labelledby="continuous-slider"
             />
           </Grid>
@@ -126,8 +152,10 @@ export default function ControlBar(props) {
           </Grid>
         </Grid>
       </div>
-      <FormControl component="fieldset" style={{color: "white"}}>
-        <FormLabel component="legend" style={{color: "white"}}>Sorting Algorithm</FormLabel>
+      <FormControl component="fieldset" style={{ color: color }}>
+        <FormLabel component="legend" style={{ color: color }}>
+          Sorting Algorithm
+        </FormLabel>
         <RadioGroup
           row
           aria-label="position"
@@ -140,7 +168,6 @@ export default function ControlBar(props) {
             value="bubbleSort"
             control={<Radio color="primary" />}
             label="Bubble Sort"
-            
           />
           <FormControlLabel
             value="quickSort"
