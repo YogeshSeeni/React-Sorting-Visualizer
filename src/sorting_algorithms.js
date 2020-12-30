@@ -25,7 +25,6 @@ export const bubbleSort = async (
   while (sorted) {
     sorted = false;
     for (let i = 0; i < sorted_array.length - 1; i++) {
-      console.log(sorting);
       setOrder([-1, -1]);
       setComparing([i, i + 1]);
       await sleep(slowest_time - speed);
@@ -47,4 +46,94 @@ export const bubbleSort = async (
   setInorder([-1, -1]);
   setOrder([-1, -1]);
   setSorting(false);
+};
+
+export const quickSort = async (
+  first,
+  arr,
+  start,
+  end,
+  setArray,
+  setComparing,
+  setInOrder,
+  setOrder,
+  speed,
+  setSorting,
+  sorting
+) => {
+  await quickSort();
+  if (start < end) {
+    const slowest_time = 500;
+
+    let pivot = arr[start];
+    let pointer = start;
+
+    for (let i = start; i < arr.length; i++) {
+      setOrder([-1, -1]);
+      // await sleep(2000);
+      setComparing([i, start, pointer]);
+      await sleep(slowest_time - speed);
+      if (arr[i] < pivot) {
+        setComparing([-1,-1]);
+        setInOrder([i, start, pointer]);
+        await sleep(slowest_time - speed);
+
+        pointer++;
+        swap(arr, pointer, i);
+        setArray([...arr]);
+      }
+      setComparing([-1,-1]);
+      setInOrder([-1,-1]);
+      setOrder([i, pointer, start]);
+      await sleep(slowest_time - speed);
+    }
+
+    setComparing([start, pointer]);
+    await sleep(slowest_time - speed);
+    setComparing([-1,-1]);
+    setInOrder([start, pointer]);
+    await sleep(slowest_time - speed);
+    
+    swap(arr, start, pointer);
+    setArray([...arr]);
+
+    setInOrder([-1,-1]);
+    setOrder([start, pointer]);
+    await sleep(slowest_time - speed);
+    setOrder([-1,-1]);
+    quickSort(
+      false,
+      arr,
+      start,
+      pointer,
+      setArray,
+      setComparing,
+      setInOrder,
+      setOrder,
+      speed,
+      setSorting,
+      sorting
+    );
+    quickSort(
+      false,
+      arr,
+      pointer + 1,
+      end,
+      setArray,
+      setComparing,
+      setInOrder,
+      setOrder,
+      speed,
+      setSorting,
+      sorting
+    );
+  
+    let sorted_array = [...arr];
+    setArray(sorted_array);
+    setSorting(false);
+    return;
+
+  } else {
+    return arr;
+  }
 };
