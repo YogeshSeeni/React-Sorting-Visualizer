@@ -1,11 +1,11 @@
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
 const swap = (array, num1, num2) => {
   let tmp = array[num1];
   array[num1] = array[num2];
   array[num2] = tmp;
-};
-
-const sleep = (milliseconds) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
 export const bubbleSort = async (
@@ -48,8 +48,7 @@ export const bubbleSort = async (
   setSorting(false);
 };
 
-export const quickSort = async (
-  first,
+export const quickSortWrapper = async (
   arr,
   start,
   end,
@@ -61,79 +60,110 @@ export const quickSort = async (
   setSorting,
   sorting
 ) => {
-  await quickSort();
-  if (start < end) {
-    const slowest_time = 500;
+  setSorting(true);
+  await quickSort(
+    arr,
+    start,
+    end,
+    setArray,
+    setComparing,
+    setInOrder,
+    setOrder,
+    speed,
+    setSorting,
+    sorting
+  );
+  setSorting(false);
+};
 
-    let pivot = arr[start];
-    let pointer = start;
+//Source: Coding Train
+const quickSort = async (
+  arr,
+  start,
+  end,
+  setArray,
+  setComparing,
+  setInOrder,
+  setOrder,
+  speed,
+  setSorting,
+  sorting
+) => {
+  let minimum_speed = 500;
 
-    for (let i = start; i < arr.length; i++) {
-      setOrder([-1, -1]);
-      // await sleep(2000);
-      setComparing([i, start, pointer]);
-      await sleep(slowest_time - speed);
-      if (arr[i] < pivot) {
-        setComparing([-1,-1]);
-        setInOrder([i, start, pointer]);
-        await sleep(slowest_time - speed);
+  setOrder([-1, -1]);
+  setComparing([-1, -1]);
+  setInOrder([-1, -1]);
 
-        pointer++;
-        swap(arr, pointer, i);
-        setArray([...arr]);
-      }
-      setComparing([-1,-1]);
-      setInOrder([-1,-1]);
-      setOrder([i, pointer, start]);
-      await sleep(slowest_time - speed);
-    }
-
-    setComparing([start, pointer]);
-    await sleep(slowest_time - speed);
-    setComparing([-1,-1]);
-    setInOrder([start, pointer]);
-    await sleep(slowest_time - speed);
-    
-    swap(arr, start, pointer);
-    setArray([...arr]);
-
-    setInOrder([-1,-1]);
-    setOrder([start, pointer]);
-    await sleep(slowest_time - speed);
-    setOrder([-1,-1]);
-    quickSort(
-      false,
-      arr,
-      start,
-      pointer,
-      setArray,
-      setComparing,
-      setInOrder,
-      setOrder,
-      speed,
-      setSorting,
-      sorting
-    );
-    quickSort(
-      false,
-      arr,
-      pointer + 1,
-      end,
-      setArray,
-      setComparing,
-      setInOrder,
-      setOrder,
-      speed,
-      setSorting,
-      sorting
-    );
-  
-    let sorted_array = [...arr];
-    setArray(sorted_array);
-    setSorting(false);
+  if (start >= end) {
+    setOrder([-1, -1]);
+    setComparing([-1, -1]);
+    setInOrder([-1, -1]);
     return;
-
-  } else {
-    return arr;
   }
+
+  let pivotIndex = start;
+  let pivotValue = arr[end];
+  for (let i = start; i < end; i++) {
+    setOrder([-1, -1]);
+    setInOrder([-1, -1]);
+    setComparing([i, pivotIndex, end]);
+    await sleep(minimum_speed - speed);
+    if (arr[i] < pivotValue) {
+      setComparing([-1, -1]);
+      setInOrder([i, pivotIndex, end]);
+      await sleep(minimum_speed - speed);
+      swap(arr, i, pivotIndex);
+      setArray([...arr]);
+      pivotIndex++;
+    }
+    setComparing([-1, -1]);
+    setInOrder([-1, -1]);
+    setOrder([i, pivotIndex, end]);
+    await sleep(minimum_speed - speed);
+  }
+
+  setOrder([-1, -1]);
+  setComparing([-1, -1]);
+  setInOrder([-1, -1]);
+  setInOrder([pivotIndex, end]);
+  await sleep(minimum_speed - speed);
+  swap(arr, pivotIndex, end);
+  setArray([...arr]);
+  setInOrder([-1, -1]);
+  setOrder([pivotIndex, end]);
+  await sleep(minimum_speed - speed);
+
+  setOrder([-1, -1]);
+  setComparing([-1, -1]);
+  setInOrder([-1, -1]);
+
+  let index = pivotIndex;
+
+  await quickSort(
+    arr,
+    start,
+    index - 1,
+    setArray,
+    setComparing,
+    setInOrder,
+    setOrder,
+    speed,
+    setSorting,
+    sorting
+  );
+  await quickSort(
+    arr,
+    index + 1,
+    end,
+    setArray,
+    setComparing,
+    setInOrder,
+    setOrder,
+    speed,
+    setSorting,
+    sorting
+  );
+
+  setArray([...arr]);
 };
