@@ -14,8 +14,8 @@ function App() {
     return array;
   };
 
-  const [speed, setSpeed] = useState(50);
-  const [arraySize, setArraySize] = useState(10);
+  const [speed, setSpeed] = useState(250);
+  const [arraySize, setArraySize] = useState(25);
   const [array, setArray] = useState(generateArray(arraySize));
   const [sortingAlgorithm, setSortingAlgorithm] = useState("bubbleSort");
   const [comparing, setComparing] = useState([-1, -1]);
