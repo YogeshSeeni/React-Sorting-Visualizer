@@ -38,6 +38,7 @@ function App() {
         setComparing={setComparing}
         setInOrder={setInOrder}
         setOrder={setOrder}
+        order={order}
         setSorting={setSorting}
         sorting={sorting}
       />

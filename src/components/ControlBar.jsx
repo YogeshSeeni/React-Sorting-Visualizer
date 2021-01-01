@@ -13,7 +13,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import { bubbleSort, quickSortWrapper } from "../sorting_algorithms";
+import { bubbleSort, insertionSort, quickSortWrapper } from "../sorting_algorithms";
 
 export default function ControlBar(props) {
   const {
@@ -29,6 +29,7 @@ export default function ControlBar(props) {
     setComparing,
     setInOrder,
     setOrder,
+    order,
     setSorting,
     sorting,
   } = props;
@@ -94,6 +95,18 @@ export default function ControlBar(props) {
           setSorting,
           sorting
         );
+      }
+      else if (sortingAlgorithm == "insertionSort") {
+        insertionSort(
+          array,
+          setArray,
+          setComparing,
+          setInOrder,
+          setOrder,
+          speed,
+          setSorting,
+          sorting
+        )
       }
     }
   };
@@ -166,7 +179,7 @@ export default function ControlBar(props) {
           </Grid>
         </Grid>
       </div>
-      <FormControl component="fieldset" style={{ color: color }}>
+      <FormControl component="fieldset" style={{ color: color, marginTop: "5px" }}>
         <FormLabel component="legend" style={{ color: color }}>
           Sorting Algorithm
         </FormLabel>
