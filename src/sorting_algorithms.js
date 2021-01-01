@@ -167,3 +167,48 @@ const quickSort = async (
 
   setArray([...arr]);
 };
+
+const makeSorted = (iterations) => {
+  let arr = [];
+  for (let i = 0; i < iterations; i++) {
+    arr.push(i);
+  }
+  return arr;
+}
+
+export const insertionSort = async (
+  array,
+  setArray,
+  setComparing,
+  setInorder,
+  setOrder,
+  speed,
+  setSorting,
+  sorting
+) => {
+  setOrder([0]);
+  let minimum_speed = 500;
+
+  for (let i = 1; i < array.length; i++) {
+    let key = array[i];
+    let j = i - 1;
+    setComparing([j]);
+    while (j >= 0 && array[j] > key) {
+      array[j + 1] = array[j];
+      setInorder([j]);
+      j--;
+      setArray([...array]);
+      await sleep(minimum_speed-speed);
+    }
+    array[j+1] = key;
+    setArray([...array])
+    setComparing([-1]);
+    setOrder(makeSorted(i));
+    await sleep(minimum_speed-speed);
+  }
+  setArray([...array]);
+  setOrder([-1,-1]);
+  setComparing([-1,-1]);
+  setInorder([-1,-1]);
+  setSorting(false);
+};
