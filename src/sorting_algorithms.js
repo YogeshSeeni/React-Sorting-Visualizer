@@ -174,7 +174,7 @@ const makeSorted = (iterations) => {
     arr.push(i);
   }
   return arr;
-}
+};
 
 export const insertionSort = async (
   array,
@@ -198,17 +198,17 @@ export const insertionSort = async (
       setInorder([j]);
       j--;
       setArray([...array]);
-      await sleep(minimum_speed-speed);
+      await sleep(minimum_speed - speed);
     }
-    array[j+1] = key;
-    setArray([...array])
+    array[j + 1] = key;
+    setArray([...array]);
     setComparing([-1]);
     setOrder(makeSorted(i));
-    await sleep(minimum_speed-speed);
+    await sleep(minimum_speed - speed);
   }
   setArray([...array]);
-  setOrder([-1,-1]);
-  setComparing([-1,-1]);
-  setInorder([-1,-1]);
+  setOrder([-1, -1]);
+  setComparing([-1, -1]);
+  setInorder([-1, -1]);
   setSorting(false);
 };
