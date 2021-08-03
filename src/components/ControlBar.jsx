@@ -13,7 +13,11 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import { bubbleSort, insertionSort, quickSortWrapper } from "../sorting_algorithms";
+import {
+  bubbleSort,
+  insertionSort,
+  quickSortWrapper,
+} from "../sorting_algorithms";
 
 export default function ControlBar(props) {
   const {
@@ -81,8 +85,7 @@ export default function ControlBar(props) {
           setSorting,
           sorting
         );
-      }
-      else if (sortingAlgorithm == "quickSort") {
+      } else if (sortingAlgorithm == "quickSort") {
         quickSortWrapper(
           array,
           0,
@@ -95,8 +98,7 @@ export default function ControlBar(props) {
           setSorting,
           sorting
         );
-      }
-      else if (sortingAlgorithm == "insertionSort") {
+      } else if (sortingAlgorithm == "insertionSort") {
         insertionSort(
           array,
           setArray,
@@ -106,7 +108,7 @@ export default function ControlBar(props) {
           speed,
           setSorting,
           sorting
-        )
+        );
       }
     }
   };
@@ -179,7 +181,10 @@ export default function ControlBar(props) {
           </Grid>
         </Grid>
       </div>
-      <FormControl component="fieldset" style={{ color: color, marginTop: "5px" }}>
+      <FormControl
+        component="fieldset"
+        style={{ color: color, marginTop: "5px" }}
+      >
         <FormLabel component="legend" style={{ color: color }}>
           Sorting Algorithm
         </FormLabel>
@@ -200,11 +205,6 @@ export default function ControlBar(props) {
             value="quickSort"
             control={<Radio color="primary" />}
             label="Quick Sort"
-          />
-          <FormControlLabel
-            value="mergeSort"
-            control={<Radio color="primary" />}
-            label="Merge Sort"
           />
           <FormControlLabel
             value="insertionSort"
